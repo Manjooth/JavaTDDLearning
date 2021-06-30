@@ -3,6 +3,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -15,5 +16,21 @@ public class MovieStoreTest {
         List<Movie> results = movieStore.findByPartialTitle("abc");
 
         assertThat(results.size(), is(0));
+    }
+
+    @Test
+    public void findsAMovieWhenTitleIsPartiallyMatched() throws Exception {
+        MovieStore movieStore = new MovieStore();
+        Movie harryPotter = new Movie("Harry Potter");
+        movieStore.add(harryPotter);
+        movieStore.add(new Movie("Shawshank Redemption"));
+        movieStore.add(new Movie("Fight Club"));
+        movieStore.add(new Movie("Pacific Rim"));
+        movieStore.add(new Movie("Lord Of The Rings"));
+
+        List<Movie> results = movieStore.findByPartialTitle("arry");
+
+        assertThat(results.size(), is(1));
+        assertThat(results, hasItem(harryPotter));
     }
 }
