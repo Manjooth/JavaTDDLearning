@@ -18,13 +18,7 @@ public class MovieStore {
                 return movie.title().toLowerCase().contains(partialTitle.toLowerCase());
             }
         };
-        List<Movie> movieList = new LinkedList<Movie>();
-        for (Movie movie : movies) {
-            if(predicate.matches(movie)){
-                movieList.add(movie);
-            }
-        }
-        return movieList;
+        return findBy(predicate);
     }
 
     public List<Movie> findDirector(String director) {
@@ -33,13 +27,7 @@ public class MovieStore {
                 return movie.director().equals(director);
             }
         };
-        List<Movie> movieList = new LinkedList<Movie>();
-        for (Movie movie : movies) {
-            if(predicate.matches(movie)){
-                movieList.add(movie);
-            }
-        }
-        return movieList;
+        return findBy(predicate);
     }
 
     public List<Movie> findByReleaseYear(int from, int to) {
@@ -48,13 +36,16 @@ public class MovieStore {
                 return movie.year() <= to && movie.year() >= from;
             }
         };
+        return findBy(predicate);
+    }
+
+    private List<Movie> findBy(Predicate predicate) {
         List<Movie> movieList = new LinkedList<Movie>();
         for (Movie movie : movies) {
-            if(predicate.matches(movie)){
+            if (predicate.matches(movie)) {
                 movieList.add(movie);
             }
         }
-
         return movieList;
     }
 
