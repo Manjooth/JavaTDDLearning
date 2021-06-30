@@ -21,4 +21,14 @@ public class MovieStore {
     public void add(Movie movie) {
         movies.add(movie);
     }
+
+    public List<Movie> findDirector(String director) {
+        List<Movie> movieList = new LinkedList<Movie>();
+        for (Movie movie : movies) {
+            if(movie.director().equals(director)){
+                movieList.add(movie);
+            }
+        }
+        return movieList;
+    }
 }

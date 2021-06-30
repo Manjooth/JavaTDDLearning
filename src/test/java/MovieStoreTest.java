@@ -12,9 +12,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class MovieStoreTest {
     private final MovieStore movieStore = new MovieStore();
 
-    private final Movie harryPotter = new Movie("Harry Potter");
-    private final Movie lordOfTheRings = new Movie("Lord Of The Rings");
-    private final Movie lordOfTheFlies = new Movie("lord of the flies");
+    private final Movie harryPotter = new Movie("Harry Potter", "Howard");
+    private final Movie lordOfTheRings = new Movie("Lord Of The Rings", "Nolan");
+    private final Movie lordOfTheFlies = new Movie("lord of the flies", "Dave");
 
     @Test
     public void returnsNoResultsWhenNoTitlesPartiallyMatchSearch() throws Exception {
@@ -33,7 +33,7 @@ public class MovieStoreTest {
     }
 
     @Test
-    public void findsMoviesWhenTitlesArePartiallyMatched() throws Exception {
+    public void findsMoviesWhenTitlesArePartiallyMatchedCaseInsensitive() throws Exception {
 
         // should ask if this case sensitive - deciding its case insensitive
         // do we care about the order?
@@ -41,5 +41,16 @@ public class MovieStoreTest {
 
         assertThat(results.size(), is(2));
         assertThat(results, hasItems(lordOfTheFlies, lordOfTheRings));
+    }
+
+    @Test
+    public void findMovieWhenDirectorExactlyMatchesCaseSensitive() throws Exception {
+
+        // should ask if this case sensitive - deciding its case insensitive
+        // do we care about the order?
+        List<Movie> results = movieStore.findDirector("Nolan");
+
+        assertThat(results.size(), is(1));
+        assertThat(results, hasItems(lordOfTheRings));
     }
 }
