@@ -13,14 +13,14 @@ public class MovieStore {
 
     // do the minimum amount to make the test pass
     public List<Movie> findByPartialTitle(String partialTitle) {
+        Predicate predicate = new Predicate() {
+            public boolean matches(Movie movie) {
+                return movie.title().toLowerCase().contains(partialTitle.toLowerCase());
+            }
+        };
         List<Movie> movieList = new LinkedList<Movie>();
         for (Movie movie : movies) {
-            if(new Predicate() {
-                @Override
-                public boolean matches(Movie movie) {
-                    return movie.title().toLowerCase().contains(partialTitle.toLowerCase());
-                }
-            }.matches(movie)){
+            if(predicate.matches(movie)){
                 movieList.add(movie);
             }
         }
@@ -28,14 +28,14 @@ public class MovieStore {
     }
 
     public List<Movie> findDirector(String director) {
+        Predicate predicate = new Predicate() {
+            public boolean matches(Movie movie) {
+                return movie.director().equals(director);
+            }
+        };
         List<Movie> movieList = new LinkedList<Movie>();
         for (Movie movie : movies) {
-            if(new Predicate() {
-                @Override
-                public boolean matches(Movie movie) {
-                    return movie.director().equals(director);
-                }
-            }.matches(movie)){
+            if(predicate.matches(movie)){
                 movieList.add(movie);
             }
         }
@@ -43,14 +43,14 @@ public class MovieStore {
     }
 
     public List<Movie> findByReleaseYear(int from, int to) {
+        Predicate predicate = new Predicate() {
+            public boolean matches(Movie movie) {
+                return movie.year() <= to && movie.year() >= from;
+            }
+        };
         List<Movie> movieList = new LinkedList<Movie>();
         for (Movie movie : movies) {
-            if(new Predicate() {
-                @Override
-                public boolean matches(Movie movie) {
-                    return movie.year() <= to && movie.year() >= from;
-                }
-            }.matches(movie)){
+            if(predicate.matches(movie)){
                 movieList.add(movie);
             }
         }
